@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Codec Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: local('CodecPro-News'), local('CodecPro-News'), format('woff2');
+}
+
+@font-face {
+  font-family: 'Codec Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: local('CodecPro-Bold'), format('woff2');
+}
