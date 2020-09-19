@@ -91,7 +91,7 @@ export default {
 <style>
 .modal {
   transition: .3s ease-in;
-  transform: translateX(760px);
+  transform: translateX(800px);
 }
 
 .modalShow {
@@ -195,6 +195,7 @@ export default {
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
+  margin-bottom: 0;
   padding: 0 64px;
   list-style: none;
 }

@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div :class="{ [$style.dark]: isDarkTheme }">
     <div :class="{ containerBlur: this.$store.state.vehicles.isModalActive }">
       <div :class="$style.container">
-        <Header />
+        <Header :isDarkTheme="isDarkTheme" :setDarkMode="setDarkMode" />
     
-        <main>
+        <main :class="$style.main">
           <Nuxt />
         </main>
     
@@ -25,6 +25,9 @@ import Header from '@/components/Header';
 import modal from '@/components/modal';
 
 export default {
+  data: () => ({
+    isDarkTheme: false,
+  }),
   components: {
     Header,
     modal
@@ -32,6 +35,9 @@ export default {
   methods: {
     closeModal() {
       this.$store.commit("vehicles/hideModal");
+    },
+    setDarkMode() {
+      this.isDarkTheme = !this.isDarkTheme;
     }
   }
 }
@@ -45,6 +51,7 @@ export default {
   width: 100%;
   height: 100%;
   filter: blur(12px);
+  overflow-y: hidden;
 }
 
 .modalBackdrop {
@@ -58,6 +65,13 @@ export default {
 </style>
 
 <style module>
+.main {
+  padding-bottom: 48px;
+}
+
+.dark {
+  background: #012345;
+}
 
 .container {
   position: relative;

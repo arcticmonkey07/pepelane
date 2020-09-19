@@ -1,46 +1,59 @@
 <template>
-  <div :class="$style.header">
-    <div :class="$style.left">
-      <nuxt-link to="/" :class="$style.logo">
-        <img :class="$style.logoImg" src="@/static/img/header-logo.svg" alt="logo" />
-        <img :class="$style.logoImgMob" src="@/static/img/header-logo-mob.svg" alt="logo" />
-      </nuxt-link>
-      <span :class="$style.promoText">World's first affordable airsharing</span>
-    </div>
-
-    <div :class="$style.right">
-      <a :class="$style.nightContainer" href="#">
-        <i :class="$style.nightModeIcon"></i>
-        <span :class="$style.nightMode">Night mod</span>
-      </a>
-
-      <div :class="$style.buttons">
-        <a href="#" :class="$style.questions"></a>
-        <a href="#" :class="$style.bell"></a>
+  <div :class="{ [$style.dark]: isDarkTheme }">
+    <div :class="$style.header">
+      <div :class="$style.left">
+        <nuxt-link to="/" :class="$style.logo">
+          <img :class="$style.logoImg" src="@/static/img/header-logo-dark.svg" v-if="isDarkTheme" alt="logo" />
+          <img :class="$style.logoImg" src="@/static/img/header-logo.svg" v-else alt="logo" />
+          <img :class="$style.logoImgMob" src="@/static/img/header-logo-mob.svg" alt="logo" />
+        </nuxt-link>
+        <span :class="$style.promoText">World's first affordable airsharing</span>
       </div>
-
-      <a href="#" :class="$style.profile">
-        <span :class="$style.name">Bessie Cooper</span>
-        <img
-          src="@/static/img/avatar.png"
-          :class="$style.avatar"
-          alt="avatar"
-        />
-      </a>
+  
+      <div :class="$style.right">
+        <a :class="$style.nightContainer" href="#" @click.prevent="setDarkMode()">
+          <i :class="$style.nightModeIcon"></i>
+          <span :class="$style.nightMode" v-if="isDarkTheme">Day mod</span>
+          <span :class="$style.nightMode" v-else>Night mod</span>
+        </a>
+  
+        <div :class="$style.buttons">
+          <a href="#" :class="$style.questions"></a>
+          <a href="#" :class="$style.bell"></a>
+        </div>
+  
+        <a href="#" :class="$style.profile">
+          <span :class="$style.name">Bessie Cooper</span>
+          <img
+            src="@/static/img/avatar.png"
+            :class="$style.avatar"
+            alt="avatar"
+          />
+        </a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ['isDarkTheme', 'setDarkMode'],
+};
 </script>
 
 <style module>
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 48px 0 40px 0;
+  margin: 0px 0 40px 0;
+  padding-top: 48px;
+  background:#fff;
+}
+
+.dark .header {
+  background:#012345;
 }
 
 .left {
@@ -51,6 +64,8 @@ export default {};
 .right {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 652px;
 }
 
 .logo {
@@ -70,6 +85,10 @@ export default {};
   color: #677b8f;
 }
 
+.dark .promoText {
+  color: #99A7B5;
+}
+
 .nightContainer {
   display: flex;
   align-items: center;
@@ -81,6 +100,15 @@ export default {};
   margin-left: 20px;
   font-weight: 300;
   color: #677b8f;
+  transition: .2s ease;
+}
+
+.nightMode:hover {
+  color: #011C37
+}
+
+.dark .nightMode:hover {
+  color: #fff;
 }
 
 .nightModeIcon {
@@ -90,9 +118,14 @@ export default {};
   background: url("~static/img/ic-night-mode.svg");
 }
 
+.dark .nightModeIcon {
+  width: 22px;
+  height: 22px;
+  background: url("~static/img/ic-light.svg");
+}
+
 .buttons {
   display: flex;
-  margin-left: 105px;
 }
 
 .questions {
@@ -113,13 +146,16 @@ export default {};
 .profile {
   display: flex;
   align-items: center;
-  margin-left: 60px;
 }
 
 .name {
   display: block;
   font-weight: bold;
   color: #012345;
+}
+
+.dark .name {
+  color: #FCFCFC;
 }
 
 .avatar {

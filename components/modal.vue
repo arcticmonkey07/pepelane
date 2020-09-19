@@ -265,7 +265,7 @@ export default {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .modal {
     width: 40%;
   }
@@ -282,12 +282,13 @@ export default {
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 500px) {
   .modal {
     width: 100%;
     margin-top: 160px;
     padding: 28px 16px 32px 16px;
     border-radius: 24px 24px 0px 0px;
+    box-sizing: border-box;
   }
 
   .modalHeader {
