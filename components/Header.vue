@@ -1,9 +1,9 @@
 <template>
-  <div :class="{ [$style.dark]: isDarkTheme }">
+  <div :class="{ [$style.dark]: this.$store.state.vehicles.isNightMode }">
     <div :class="$style.header">
       <div :class="$style.left">
         <nuxt-link to="/" :class="$style.logo">
-          <img :class="$style.logoImg" src="@/static/img/header-logo-dark.svg" v-if="isDarkTheme" alt="logo" />
+          <img :class="$style.logoImg" src="@/static/img/header-logo-dark.svg" v-if="this.$store.state.vehicles.isNightMode" alt="logo" />
           <img :class="$style.logoImg" src="@/static/img/header-logo.svg" v-else alt="logo" />
           <img :class="$style.logoImgMob" src="@/static/img/header-logo-mob.svg" alt="logo" />
         </nuxt-link>
@@ -12,8 +12,8 @@
   
       <div :class="$style.right">
         <a :class="$style.nightContainer" href="#" @click.prevent="setDarkMode()">
-          <i :class="$style.nightModeIcon"></i>
-          <span :class="$style.nightMode" v-if="isDarkTheme">Day mod</span>
+          <i :class="$style.nightModeIcon" class="nightModeIcon"></i>
+          <span :class="$style.nightMode" v-if="this.$store.state.vehicles.isNightMode">Day mod</span>
           <span :class="$style.nightMode" v-else>Night mod</span>
         </a>
   
@@ -37,7 +37,17 @@
 
 <script>
 export default {
-  props: ['isDarkTheme', 'setDarkMode'],
+  methods: {
+    setDarkMode() {
+      this.$store.commit("vehicles/setNightMode");
+
+      if (this.$store.state.vehicles.isNightMode) {
+        document.body.style.backgroundColor = "var(--night)";
+      } else {
+        document.body.style.backgroundColor = "#ffffff";
+      }
+    }
+  }
 };
 </script>
 
@@ -53,7 +63,7 @@ export default {
 }
 
 .dark .header {
-  background:#012345;
+  background:var(--night);
 }
 
 .left {
@@ -71,6 +81,7 @@ export default {
 .logo {
   margin-right: 65px;
   cursor: pointer;
+  user-select: none;
 }
 
 .logoImgMob {
@@ -82,16 +93,17 @@ export default {
   font-weight: 300;
   font-size: 16px;
   line-height: 24px;
-  color: #677b8f;
+  color: var(--light-text);
 }
 
 .dark .promoText {
-  color: #99A7B5;
+  color: var(--night-text);
 }
 
 .nightContainer {
   display: flex;
   align-items: center;
+  user-select: none;
 }
 
 .nightMode {
@@ -99,12 +111,12 @@ export default {
   display: block;
   margin-left: 20px;
   font-weight: 300;
-  color: #677b8f;
+  color: var(--light-text);
   transition: .2s ease;
 }
 
 .nightMode:hover {
-  color: #011C37
+  color: var(--night-darken);
 }
 
 .dark .nightMode:hover {
@@ -146,16 +158,17 @@ export default {
 .profile {
   display: flex;
   align-items: center;
+  user-select: none;
 }
 
 .name {
   display: block;
   font-weight: bold;
-  color: #012345;
+  color: var(--night);
 }
 
 .dark .name {
-  color: #FCFCFC;
+  color:var(--white);
 }
 
 .avatar {

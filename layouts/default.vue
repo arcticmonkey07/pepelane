@@ -1,8 +1,8 @@
 <template>
-  <div :class="{ [$style.dark]: isDarkTheme }">
-    <div :class="{ containerBlur: this.$store.state.vehicles.isModalActive }">
+  <div :class="{ [$style.dark]: this.$store.state.vehicles.isNightMode }">
+    <div :class="{ [$style.containerBlur]: this.$store.state.vehicles.isModalActive }">
       <div :class="$style.container">
-        <Header :isDarkTheme="isDarkTheme" :setDarkMode="setDarkMode" />
+        <Header />
     
         <main :class="$style.main">
           <Nuxt />
@@ -10,7 +10,7 @@
     
       </div>
     </div>
-    <div :class="{ modalBackdrop: this.$store.state.vehicles.isModalActive }">
+    <div :class="{ [$style.modalBackdrop]: this.$store.state.vehicles.isModalActive }">
       <modal
         class="modal"
         :class="{ modalShow: this.$store.state.vehicles.isModalActive }"
@@ -25,25 +25,19 @@ import Header from '@/components/Header';
 import modal from '@/components/modal';
 
 export default {
-  data: () => ({
-    isDarkTheme: false,
-  }),
   components: {
     Header,
     modal
   },
   methods: {
     closeModal() {
-      this.$store.commit("vehicles/hideModal");
-    },
-    setDarkMode() {
-      this.isDarkTheme = !this.isDarkTheme;
+      this.$store.commit("vehicles/toggleModal");
     }
   }
 }
 </script>
 
-<style>
+<style module>
 .containerBlur {
   position: absolute;
   top: 0;
@@ -62,15 +56,13 @@ export default {
   height: 100%;
   background: rgba(52, 79, 106, 0.32);
 }
-</style>
-
-<style module>
-.main {
-  padding-bottom: 48px;
-}
 
 .dark {
-  background: #012345;
+  background: var(--night);
+}
+
+.main {
+  padding-bottom: 48px;
 }
 
 .container {

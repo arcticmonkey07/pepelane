@@ -1,42 +1,44 @@
 <template>
-  <div :class="$style.mainContainer">
-    <div :class="$style.topContainer">
-      <div :class="$style.left">
-        <span :class="$style.leftText">Rent</span>
-        <select :class="$style.selectType" v-model="type">
-          <option v-for="type of uniqueTypes" :key='type'>{{ type }}</option>
-        </select>
-      </div>
+  <div :class="{ [$style.dark]: this.$store.state.vehicles.isNightMode }">
+    <div :class="$style.mainContainer">
+      <div :class="$style.topContainer">
+        <div :class="$style.left">
+          <span :class="$style.leftText">Rent</span>
+          <select :class="$style.selectType" v-model="type">
+            <option v-for="type of uniqueTypes" :key='type'>{{ type }}</option>
+          </select>
+        </div>
 
-      <a :class="$style.right" href="#" @click.prevent="showModal()">
-        <span :class="$style.rightText">Add new</span>
-        <button :class="$style.buttonAdd">+</button>
-      </a>
-    </div>
-    <ul :class="$style.list">
-      <li
-        :class="$style.listItem"
-        v-for="vehicle of filtredVehicles"
-        :key="vehicle.id"
-        @click.prevent="openDetails(vehicle)"
-      >
-        <a
-          :class="$style.listItemLink"
-          href="#"
-        >
-          <img
-            :class="$style.itemImg"
-            :src="`${vehicle.preview}`"
-            alt="preview"
-          />
-          <div :class="$style.itemContent">
-            <h3 :class="$style.itemTitle">{{ vehicle.name }}</h3>
-            <p :class="$style.itemDescription">{{ vehicle.description }}</p>
-            <span :class="$style.itemRent">{{ vehicle.rent }} $/h</span>
-          </div>
+        <a :class="$style.right" href="#" @click.prevent="showModal()">
+          <span :class="$style.rightText">Add new</span>
+          <button :class="$style.buttonAdd">+</button>
         </a>
-      </li>
-    </ul>
+      </div>
+      <ul :class="$style.list">
+        <li
+          :class="$style.listItem"
+          v-for="vehicle of filtredVehicles"
+          :key="vehicle.id"
+          @click.prevent="openDetails(vehicle)"
+        >
+          <a
+            :class="$style.listItemLink"
+            href="#"
+          >
+            <img
+              :class="$style.itemImg"
+              :src="`${vehicle.preview}`"
+              alt="preview"
+            />
+            <div :class="$style.itemContent">
+              <h3 :class="$style.itemTitle">{{ vehicle.name }}</h3>
+              <p :class="$style.itemDescription">{{ vehicle.description }}</p>
+              <span :class="$style.itemRent">{{ vehicle.rent }} $/h</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -50,11 +52,9 @@ export default {
   },
   data: () => ({
     type: 'whatever',
+    isNightMode: false
   }),
   computed: {
-    vehicles() {
-      return this.$store.getters['vehicles/vehicles']
-    },
     uniqueTypes() {
       const vehicles = this.$store.state.vehicles.vehicles;
       const vehicleTypes = vehicles.map(item => item.type);
@@ -81,7 +81,7 @@ export default {
       this.$router.push("/" + rent.name);
     },
     showModal() {
-      this.$store.commit("vehicles/showModal");
+      this.$store.commit("vehicles/toggleModal");
     },
   }
 };
@@ -100,10 +100,13 @@ export default {
 </style>
 
 <style module>
-
 .mainContainer {
-  background: #f3f4f7;
+  background: var(--bg-light);
   border-radius: 48px;
+}
+
+.dark .mainContainer {
+  background: var(--night-darken);
 }
 
 .topContainer {
@@ -118,10 +121,15 @@ export default {
   font-weight: 700;
   font-size: 40px;
   line-height: 48px;
+  user-select: none;
 }
 
 .leftText {
   margin-right: 12px;
+}
+
+.dark .leftText {
+  color: var(--white);
 }
 
 .selectType {
@@ -130,9 +138,9 @@ export default {
   font-size: 40px;
   line-height: 40px;
   font-weight: 700;
-  color: #4959ff;
+  color: var(--primary-color);
   border: none;
-  background: #f3f4f7;
+  background: var(--bg-light);
   background-image: url("~static/img/ic-arrow-down.svg");
   background-repeat: no-repeat;
   background-position: 195px 20px;
@@ -142,51 +150,56 @@ export default {
   transition: .2s ease;
 }
 
+.dark .selectType {
+  background-color: var(--night-darken);
+}
+
 .selectType:hover {
-  color: #293afa;
+  color: var(--primary-hover);
 }
 
 .right {
   display: flex;
   align-items: center;
+  user-select: none;
 }
 
 .rightText {
   font-weight: 700;
   font-size: 20px;
   line-height: 28px;
-  color: #4959ff;
+  color: var(--primary-color);
   transition: .2s ease;
 }
 
 .right:hover .rightText {
-  color: #293afa;
+  color: var(--primary-hover);
 }
 
 .right:active .rightText {
-  color:#707cfa;
+  color:var(--primary-active);
 }
 
 .buttonAdd {
   width: 48px;
   height: 48px;
   margin-left: 20px;
-  background: #4959ff;
+  background: var(--primary-color);
   border: none;
   border-radius: 16px;
   font-size: 22px;
-  color: #fff;
+  color: var(--white);
   cursor: pointer;
   transition: .2s ease;
   outline: none;
 }
 
 .right:hover .buttonAdd {
-  background: #293afa;
+  background: var(--primary-hover);
 }
 
 .right:active .buttonAdd {
-  background: #707cfa;
+  background: var(--primary-active);
 }
 
 .list {
@@ -203,14 +216,19 @@ export default {
 .listItem {
   width: 20%;
   padding: 0 15px;
+  user-select: none;
 }
 
 .listItemLink {
   display: flex;
   margin-bottom: 32px;
   padding: 25px 32px;
-  background: #fcfcfc;
+  background: var(--white);
   border-radius: 32px;
+}
+
+.dark .listItemLink {
+  background-color: var(--night);
 }
 
 .itemImg {
@@ -229,7 +247,11 @@ export default {
   margin: 0 0 12px 0;
   font-weight: 700;
   line-height: 18px;
-  color: #012345;
+  color: var(--night);
+}
+
+.dark .itemTitle {
+  color: var(--white);
 }
 
 .itemDescription {
@@ -237,7 +259,11 @@ export default {
   font-weight: 300;
   font-size: 12px;
   line-height: 18px;
-  color: #677b8f;
+  color: var(--light-text);
+}
+
+.dark .itemDescription {
+  color: var(--night-text);
 }
 
 .itemRent {
@@ -245,7 +271,7 @@ export default {
   font-weight: 700;
   font-size: 14px;
   line-height: 21px;
-  color: #f84ab3;
+  color: var(--secondary);
 }
 
 @media (max-width: 1700px) {

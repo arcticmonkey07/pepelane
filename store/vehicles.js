@@ -3,6 +3,7 @@ import { getVehicles } from "~/api/request";
 export const state = () => ({
   vehicles: [],
   isModalActive: false,
+  isNightMode: false
 });
 
 export const actions = {
@@ -17,15 +18,14 @@ export const mutations = {
     state.vehicles = vehicles;
   },
   addVehicle(state, payload) {
-    let vehicles = state.vehicles.concat(payload);
-    state.vehicles = vehicles;
+    state.vehicles.push({ ...payload });
     console.log(state);
   },
-  showModal(state) {
-    state.isModalActive = true;
+  toggleModal(state) {
+    state.isModalActive = !state.isModalActive;
   },
-  hideModal(state) {
-    state.isModalActive = false;
+  setNightMode(state) {
+    state.isNightMode = !state.isNightMode;
   }
 };
 

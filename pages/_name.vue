@@ -1,103 +1,105 @@
 <template>
-  <section :class="$style.detailContainer">
-    <div :class="$style.imageContainer">
-      <img :class="$style.image" :src="`${vehicle.image}`" alt="detail-image" />
-    </div>
-
-    <div>
-      <h2 :class="$style.title">{{ vehicle.name }}</h2>
-
-      <DetailTabs>
-        <DetailTab name="Specifications" selected="true">
-          <p :class="$style.description">{{ vehicle.specifications_text }}</p>
-
-          <h3 :class="$style.featuresHeader">Features:</h3>
-
-          <ul :class="$style.featuresList">
-            <li :class="$style.featuresItem">
-              <span
-                :class="[$style.featuresItemIcon, $style.featuresItemIconCup]"
-              ></span>
-              <div :class="$style.featuresItemContainer">
-                <h4 :class="$style.featuresItemHeader">
-                  A challenge for a true champion
-                </h4>
-                <p :class="$style.featuresItemText">
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint. Velit officia consequat duis enim velit mollit.
-                </p>
-              </div>
-            </li>
-            <li :class="$style.featuresItem">
-              <span
-                :class="[$style.featuresItemIcon, $style.featuresItemIconPerson]"
-              ></span>
-              <div :class="$style.featuresItemContainer">
-                <h4 :class="$style.featuresItemHeader">Pilot's sweaty hands</h4>
-                <p :class="$style.featuresItemText">
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint. Velit officia consequat duis enim velit mollit.
-                </p>
-              </div>
-            </li>
-          </ul>
-        </DetailTab>
+  <div :class="{ [$style.dark]: this.$store.state.vehicles.isNightMode }">
+    <section :class="$style.detailContainer">
+      <div :class="$style.imageContainer">
+        <img :class="$style.image" :src="`${vehicle.image}`" alt="detail-image" />
+      </div>
   
-        <DetailTab name="Team">
-          <p :class="$style.description">{{ vehicle.team_text }}</p>
-
-          <h3 :class="$style.featuresHeader">Qualified specialists </h3>
-
-          <ul :class="$style.specList">
-            <li :class="$style.specItem">
-              <img  :class="$style.specImg" src="@/static/img/specialist01.jpg" alt="specialist-img">
-              <div :class="$style.specContent">
-                <h4 :class="$style.specHeader">Marvin McKinney</h4>
-                <span :class="$style.specText">Pilot assistant</span>
-              </div>
-            </li>
-            <li :class="$style.specItem">
-              <img :class="$style.specImg" src="@/static/img/specialist02.jpg" alt="specialist-img">
-              <div :class="$style.specContent">
-                <h4 :class="$style.specHeader">Savannah Nguyen</h4>
-                <span :class="$style.specText">Mechanic</span>
-              </div>
-            </li>
-            <li :class="$style.specItem">
-              <img :class="$style.specImg" src="@/static/img/specialist03.jpg" alt="specialist-img">
-              <div :class="$style.specContent">
-                <h4 :class="$style.specHeader">Courtney Henry</h4>
-                <span :class="$style.specText">Stewardess</span>
-              </div>
-            </li>
-          </ul>
-
-          <p :class="$style.description">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
-        </DetailTab>
+      <div>
+        <h2 :class="$style.title">{{ vehicle.name }}</h2>
   
-        <DetailTab name="Rent terms">
-          <p :class="$style.description">{{ vehicle.term_text }}</p>
-
-          <h4 :class="$style.termsHeader">Additional conditions:</h4>
-
-          <ul :class="$style.termsList">
-            <li :class="$style.termsItem">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</li>
-            <li :class="$style.termsItem">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</li>
-            <li :class="$style.termsItem">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</li>
-          </ul>
-        </DetailTab>
-      </DetailTabs>
-
-      <div :class="$style.rentBackgroundMobile">
-        <div :class="$style.rentContainer">
-          <span :class="$style.rentPrice"
-            >Rent for <span>{{ vehicle.rent }} $/h</span></span
-          >
-          <button :class="$style.rentButton">Rent now</button>
+        <DetailTabs>
+          <DetailTab name="Specifications" selected="true">
+            <p :class="$style.description">{{ vehicle.specifications_text }}</p>
+  
+            <h3 :class="$style.featuresHeader">Features:</h3>
+  
+            <ul :class="$style.featuresList">
+              <li :class="$style.featuresItem">
+                <span
+                  :class="[$style.featuresItemIcon, $style.featuresItemIconCup]"
+                ></span>
+                <div :class="$style.featuresItemContainer">
+                  <h4 :class="$style.featuresItemHeader">
+                    A challenge for a true champion
+                  </h4>
+                  <p :class="$style.featuresItemText">
+                    Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+                    amet sint. Velit officia consequat duis enim velit mollit.
+                  </p>
+                </div>
+              </li>
+              <li :class="$style.featuresItem">
+                <span
+                  :class="[$style.featuresItemIcon, $style.featuresItemIconPerson]"
+                ></span>
+                <div :class="$style.featuresItemContainer">
+                  <h4 :class="$style.featuresItemHeader">Pilot's sweaty hands</h4>
+                  <p :class="$style.featuresItemText">
+                    Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+                    amet sint. Velit officia consequat duis enim velit mollit.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </DetailTab>
+    
+          <DetailTab name="Team">
+            <p :class="$style.description">{{ vehicle.team_text }}</p>
+  
+            <h3 :class="$style.featuresHeader">Qualified specialists </h3>
+  
+            <ul :class="$style.specList">
+              <li :class="$style.specItem">
+                <img  :class="$style.specImg" src="@/static/img/specialist01.jpg" alt="specialist-img">
+                <div :class="$style.specContent">
+                  <h4 :class="$style.specHeader">Marvin McKinney</h4>
+                  <span :class="$style.specText">Pilot assistant</span>
+                </div>
+              </li>
+              <li :class="$style.specItem">
+                <img :class="$style.specImg" src="@/static/img/specialist02.jpg" alt="specialist-img">
+                <div :class="$style.specContent">
+                  <h4 :class="$style.specHeader">Savannah Nguyen</h4>
+                  <span :class="$style.specText">Mechanic</span>
+                </div>
+              </li>
+              <li :class="$style.specItem">
+                <img :class="$style.specImg" src="@/static/img/specialist03.jpg" alt="specialist-img">
+                <div :class="$style.specContent">
+                  <h4 :class="$style.specHeader">Courtney Henry</h4>
+                  <span :class="$style.specText">Stewardess</span>
+                </div>
+              </li>
+            </ul>
+  
+            <p :class="$style.description">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+          </DetailTab>
+    
+          <DetailTab name="Rent terms">
+            <p :class="$style.description">{{ vehicle.term_text }}</p>
+  
+            <h4 :class="$style.termsHeader">Additional conditions:</h4>
+  
+            <ul :class="$style.termsList">
+              <li :class="$style.termsItem">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</li>
+              <li :class="$style.termsItem">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</li>
+              <li :class="$style.termsItem">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</li>
+            </ul>
+          </DetailTab>
+        </DetailTabs>
+  
+        <div :class="$style.rentBackgroundMobile">
+          <div :class="$style.rentContainer">
+            <span :class="$style.rentPrice"
+              >Rent for <span>{{ vehicle.rent }} $/h</span></span
+            >
+            <button :class="$style.rentButton">Rent now</button>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -133,7 +135,11 @@ export default {
   font-weight: 700;
   font-size: 40px;
   line-height: 48px;
-  color: #012345;
+  color: var(--night);
+}
+
+.dark .title {
+  color: var(--white);
 }
 
 .specList {
@@ -148,7 +154,7 @@ export default {
   margin-right: 32px;
   font-weight: 700;
   line-height: 16px;
-  color: #677B8F;
+  color: var(--light-text);
 }
 
 .description {
@@ -156,7 +162,11 @@ export default {
   font-weight: 300;
   font-size: 14px;
   line-height: 20px;
-  color: #677B8F;
+  color: var(--light-text);
+}
+
+.dark .description {
+  color: var(--night-text);
 }
 
 .featuresHeader {
@@ -164,7 +174,11 @@ export default {
   font-weight: 700;
   font-size: 24px;
   line-height: 24px;
-  color: #012345;
+  color: var(--night);
+}
+
+.dark .featuresHeader {
+  color: var(--white);
 }
 
 .featuresList {
@@ -188,8 +202,12 @@ export default {
   width: 80px;
   height: 96px;
   margin: 0 24px 0 0;
-  background: #f3f4f7;
+  background: var(--bg-light);
   border-radius: 16px;
+}
+
+.dark .featuresItemIcon {
+  background-color: var(--night-darken);
 }
 
 .featuresItemIcon:before {
@@ -217,7 +235,11 @@ export default {
   margin: 0 0 8px 0;
   font-weight: 700;
   line-height: 24px;
-  color: #012345;
+  color: var(--night);
+}
+
+.dark .featuresItemHeader {
+  color: var(--white);
 }
 
 .featuresItemText {
@@ -225,7 +247,11 @@ export default {
   font-weight: 300;
   font-size: 14px;
   line-height: 20px;
-  color: #677b8f;
+  color: var(--light-text);
+}
+
+.dark .featuresItemText {
+  color: var(--night-text);
 }
 
 .rentContainer {
@@ -234,40 +260,49 @@ export default {
   align-items: center;
   margin-bottom: 32px;
   padding: 16px 32px;
-  background: #f3f4f7;
+  background: var(--bg-light);
   border-radius: 16px;
+}
+
+.dark .rentContainer {
+  background: var(--night-darken);
 }
 
 .rentPrice {
   font-weight: 700;
   font-size: 20px;
   line-height: 28px;
-  color: #012345;
+  color: var(--night);
+}
+
+.dark .rentPrice {
+  color: var(--white);
 }
 
 .rentPrice span {
-  color: #f84ab3;
+  color: var(--secondary);
 }
 
 .rentButton {
   padding: 17px 32px;
   font-weight: 700;
   line-height: 16px;
-  color: #fcfcfc;
-  background: #4959ff;
+  color: var(--white);
+  background: var(--primary-color);
   border: none;
   border-radius: 12px;
   cursor: pointer;
   transition: .2s ease;
   outline: none;
+  user-select: none;
 }
 
 .rentButton:hover {
-  background: #293afa;
+  background: var(--primary-hover);
 }
 
 .rentButton:active {
-  background: #707cfa;
+  background: var(--primary-active);
 }
 
 .specList {
@@ -295,7 +330,11 @@ export default {
   margin: 0 0 8px 0;
   font-weight: 700;
   line-height: 16px;
-  color: #012345;
+  color: var(--night)
+}
+
+.dark .specHeader {
+  color: var(--white);
 }
 
 .specText {
@@ -303,7 +342,11 @@ export default {
   font-weight: 300;
   font-size: 12px;
   line-height: 18px;
-  color: #677B8F;
+  color: var(--light-text);
+}
+
+.dark .specText {
+  color: var(--night-text);
 }
 
 .termsHeader {
@@ -311,7 +354,11 @@ export default {
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
-  color: #012345;
+  color: var(--night);
+}
+
+.dark .termsHeader {
+  color: var(--white);
 }
 
 .termsList {
@@ -326,6 +373,10 @@ export default {
   padding-left: 20px;
 }
 
+.dark .termsItem {
+  color: var(--night-text);
+}
+
 .termsItem:last-child {
   margin-bottom: 0;
 }
@@ -337,7 +388,7 @@ export default {
   left: 0;
   width: 4px;
   height: 4px;
-  background: #F84AB3;
+  background: var(--secondary);
   border-radius: 50%;
 }
 
@@ -509,7 +560,7 @@ export default {
     right: 16px;
     z-index: 2;
     padding: 12px 24px;
-    background: #F3F4F7;
+    background: var(--bg-light);
   }
 
   .rentBackgroundMobile {

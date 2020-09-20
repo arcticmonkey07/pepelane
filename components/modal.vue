@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.modal">
+  <div :class="[$style.modal, { [$style.dark]: this.$store.state.vehicles.isNightMode }]">
     <header :class="$style.modalHeader">
       <h2 :class="$style.modalHeaderText">Add new vehicle</h2>
       <button type="button" @click="close" :class="$style.modalClose"></button>
@@ -18,7 +18,7 @@
           type="text"
           placeholder="Description"
           :class="$style.modalInput"
-          v-model="vehicle.description"
+          v-model="vehicle.specifications_text"
         />
         <div :class="$style.rentInputContainer">
           <input
@@ -45,15 +45,18 @@ export default {
   name: "modal",
   data: () => ({
     vehicle: {
-      name: '',
-      description: '',
-      rent: '',
-      type: 'custom'
+      name: "",
+      specifications_text: "",
+      rent: "",
+      type: "custom"
     }
   }),
   methods: {
-    submit() {
-      this.$store.commit("vehicles/addVehicle", this.vehicle);
+    submit(e) {
+      this.$store.commit("vehicles/addVehicle", { ...this.vehicle });
+      this.vehicle.name = this.vehicle.specifications_text = this.vehicle.rent =
+        "";
+      e.target.reset();
       this.$emit("close");
     },
     close() {
@@ -80,6 +83,10 @@ export default {
   overflow-x: auto;
 }
 
+.dark.modal {
+  background: var(--night);
+}
+
 .modalHeader {
   display: flex;
   justify-content: space-between;
@@ -92,23 +99,28 @@ export default {
   font-weight: 700;
   font-size: 40px;
   line-height: 48px;
-  color: #012345;
+  color: var(--night);
+}
+
+.dark .modalHeaderText {
+  color: var(--white);
 }
 
 .modalClose {
   width: 48px;
   height: 48px;
   font-size: 18px;
-  color: #012345;
-  background: #f3f4f7;
+  color: var(--night);
+  background-color: var(--bg-light);
   border-radius: 16px;
   border: none;
   cursor: pointer;
   background-image: url("~static/img/cross.svg");
   background-repeat: no-repeat;
   background-position: center;
-  transition: .2s ease;
+  transition: 0.2s ease;
   outline: none;
+  user-select: none;
 }
 
 .modalClose:hover {
@@ -119,19 +131,38 @@ export default {
   background-color: #ffffff;
 }
 
+.dark .modalClose {
+  background-color: var(--night-darken);
+  background-image: url("~static/img/cross-white.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.dark .modalClose:hover {
+  background-color: #010b16;
+}
+
+.dark .modalClose:active {
+  background-color: #032f5c;
+}
+
 .modalImg {
   position: relative;
   display: block;
   width: 100%;
   height: 348px;
   margin-bottom: 24px;
-  background: #f3f4f7;
+  background: var(--bg-light);
   border-radius: 24px;
   cursor: pointer;
 }
 
+.dark .modalImg {
+  background: var(--night-darken);
+}
+
 .modalImg:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -139,26 +170,36 @@ export default {
   height: 48px;
   border-radius: 16px;
   transform: translate(-50%, -50%);
-  background: #fff;
+  background-color: #fff;
   background-image: url("~static/img/addImg.svg");
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.dark .modalImg:before {
+  background-color: var(--night);
 }
 
 .modalInput {
   width: calc(100% - 70px);
   padding: 20px 52px 20px 18px;
   margin-bottom: 24px;
-  background: #f3f4f7;
+  background: var(--bg-light);
   border: none;
   border-radius: 12px;
   border: 2px solid transparent;
-  transition: .2s ease;
+  transition: 0.2s ease;
   outline: none;
+  user-select: none;
+}
+
+.dark .modalInput {
+  background-color: var(--night-darken);
+  color: var(--night-text);
 }
 
 .modalInput:focus {
-  border: 2px solid #707cfa;
+  border: 2px solid var(--primary-active);
 }
 
 .modalInput::-webkit-input-placeholder {
@@ -166,7 +207,7 @@ export default {
   font-weight: 300;
   font-size: 16px;
   line-height: 16px;
-  color: #677B8F;
+  color: var(--light-text);
 }
 
 .modalInput::-moz-placeholder {
@@ -174,7 +215,7 @@ export default {
   font-weight: 300;
   font-size: 16px;
   line-height: 16px;
-  color: #677B8F;
+  color: var(--light-text);
 }
 
 .modalInput::-ms-input-placeholder {
@@ -182,7 +223,19 @@ export default {
   font-weight: 300;
   font-size: 16px;
   line-height: 16px;
-  color: #677B8F;
+  color: var(--light-text);
+}
+
+.dark .modalInput::-webkit-input-placeholder {
+  color: var(--night-text);
+}
+
+.dark .modalInput::-moz-placeholder {
+  color: var(--night-text);
+}
+
+.dark .modalInput::-ms-input-placeholder {
+  color: var(--night-text);
 }
 
 .modalSubmit {
@@ -191,21 +244,22 @@ export default {
   padding: 20px 0;
   font-weight: 700;
   line-height: 16px;
-  color: #fcfcfc;
-  background: #4959ff;
+  color: var(--white);
+  background: var(--primary-color);
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  transition: .2s ease;
+  transition: 0.2s ease;
   outline: none;
+  user-select: none;
 }
 
 .modalSubmit:hover {
-  background: #293afa;
+  background: var(--primary-hover);
 }
 
 .modalSubmit:active {
-  background: #707cfa;
+  background: var(--primary-active);
 }
 
 .rentInputContainer {
@@ -226,7 +280,7 @@ export default {
   font-size: 16px;
   line-height: 16px;
   text-align: right;
-  color: #99A7B5;
+  color: var(--night-text);
   transform: translateY(-50%);
 }
 
@@ -355,6 +409,4 @@ export default {
     line-height: 14px;
   }
 }
-
-
 </style>

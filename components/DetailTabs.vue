@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ [$style.dark]: this.$store.state.vehicles.isNightMode }">
     <ul :class="$style.specList">
       <li :class="$style.specItem" v-for="(tab, index) in tabs" :key="index">
         <a
@@ -38,12 +38,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.is-active {
-  color: #4959ff;
-}
-</style>
-
 <style module>
 .specList {
   display: flex;
@@ -57,24 +51,21 @@ export default {
   margin-right: 32px;
   font-weight: 700;
   line-height: 16px;
-  color: #677b8f;
+  color: var(--light-text);
   transition: .2s ease;
+  user-select: none;
+}
+
+.dark .specLink {
+  color: var(--night-text);
 }
 
 .specLink:hover {
-  color: #293afa;
+  color: var(--primary-hover);
 }
 
 .specLink:active {
-  color: #707cfa;
-}
-
-.description {
-  margin: 0 0 32px 0;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 20px;
-  color: #677b8f;
+  color: var(--primary-active);
 }
 
 @media (max-width: 900px) {
@@ -100,4 +91,10 @@ export default {
   }
 }
 
+</style>
+
+<style scoped>
+.is-active {
+  color: var(--primary-color);
+}
 </style>
